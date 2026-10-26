@@ -79,10 +79,10 @@ Extract in this order:
 2. the hekate fork release, if you boot through hekate (its `bootloader/sys/emummc.kipm` is built from the Atmosphère fork);
 3. this `dist.zip`.
 
-hekate boot entry:
+hekate boot entry (`kip1` and `secmon` must come after `pkg3`, so they override what hekate loads from `package3`):
 
 ```ini
-fss0=atmosphere/package3
+pkg3=atmosphere/package3
 kip1=atmosphere/kips/hoc.kip
 secmon=atmosphere/exosphere.bin
 ```
