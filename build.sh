@@ -180,7 +180,7 @@ SRC="Source/Atmosphere/stratosphere/loader/"
 mkdir -p "build"
 
 ATMOSPHERE_DIR="build/atmosphere"
-ATMOSPHERE_URL="https://github.com/Atmosphere-NX/Atmosphere.git"
+ATMOSPHERE_URL="${ATMOSPHERE_URL:-https://github.com/Atmosphere-NX/Atmosphere.git}"
 
 if [ ! -d "$ATMOSPHERE_DIR" ]; then
     echo
@@ -191,7 +191,9 @@ if [ ! -d "$ATMOSPHERE_DIR" ]; then
 
     git fetch --tags --quiet
     LATEST_TAG=$(git tag --sort=-version:refname | head -n1)
-    git checkout -q -b build "$LATEST_TAG"
+    ATMOSPHERE_CHECKOUT="${ATMOSPHERE_REF:-$LATEST_TAG}"
+    git rev-parse -q --verify "origin/$ATMOSPHERE_CHECKOUT" >/dev/null && ATMOSPHERE_CHECKOUT="origin/$ATMOSPHERE_CHECKOUT"
+    git checkout -q -b build "$ATMOSPHERE_CHECKOUT"
 
     cd "$ROOT_DIR"
 fi
